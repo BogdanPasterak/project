@@ -35,21 +35,27 @@ LIST_FILE=$(eval "ls ${SOUR}");
 for FILE_NAME in $LIST_FILE
 do
     # compress all files best compres
-    COMMAND="gzip -cv9 ${SOUR}${FILE_NAME} > ${DEST}/${FILE_NAME}.gz"
+    COMMAND="gzip -cv9 ${SOUR}${FILE_NAME} > ${DEST}${FILE_NAME}.gz"
     # echo -e "COMMAND = ${COMMAND}";
+#    eval $COMMAND | cut -d' ' -f 2; # nie dziala
+    # redirect stdout to file (append)
+    # eval $COMMAND &>>out.txt 
+    # redirect stdout to variable
+    OUTPUT=$(eval $COMMAND 2>&1);
+    echo "Wynik = >${OUTPUT}< koniec";
+    COMMAND="bzip2 -zfkcv9 ${SOUR}${FILE_NAME} > ${DEST}${FILE_NAME}.zip"
     eval $COMMAND;
-    #bzip2 -zfkcv9 ./source/bzip2_h.txt > ./destination/bzip2_h.txt.zip
 done
 
 for FILE_NAME in $LIST_FILE
 do
     # name file in color
-    echo -e "\n${LIGHT_GREEN}${FILE_NAME}${NC}";
+#    echo -e "\n${LIGHT_GREEN}${FILE_NAME}${NC}";
     ORGIN=$(eval "ls -l ${SOUR}${FILE_NAME} | cut -d' ' -f 5");
     COMPR=$(eval "ls -l ${DEST}${FILE_NAME}.gz | cut -d' ' -f 5");
     SAVE=$((ORGIN - COMPR));
     PROC=$((SAVE * 100 / ORGIN));
-    echo "Size reduction -> ${ORGIN} - ${COMPR} = ${SAVE} -> ${PROC}%"
+#    echo "Size reduction -> ${ORGIN} - ${COMPR} = ${SAVE} -> ${PROC}%"
     ## print text from file
     # cat "$SOUR$FILE_NAME";
     # echo -e "\n";
