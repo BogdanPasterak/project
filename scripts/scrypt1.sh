@@ -35,16 +35,27 @@ LIST_FILE=$(eval "ls ${SOUR}");
 for FILE_NAME in $LIST_FILE
 do
     # compress all files best compres
+
+    ## gzip
     COMMAND="gzip -cv9 ${SOUR}${FILE_NAME} > ${DEST}${FILE_NAME}.gz"
     # echo -e "COMMAND = ${COMMAND}";
 #    eval $COMMAND | cut -d' ' -f 2; # nie dziala
     # redirect stdout to file (append)
     # eval $COMMAND &>>out.txt 
     # redirect stdout to variable
-    OUTPUT=$(eval $COMMAND 2>&1);
-    echo "Wynik = >${OUTPUT}< koniec";
+    # and extract %
+    OUTPUT=$(eval $COMMAND 2>&1); #  | cut -d' ' -f 2 | cut -b 1-4
+    OUTPUT=${OUTPUT%%%*};
+    OUTPUT=${OUTPUT: -4};
+    echo "Wynik gzip  = ${OUTPUT}";
+
+    ## bzip2
     COMMAND="bzip2 -zfkcv9 ${SOUR}${FILE_NAME} > ${DEST}${FILE_NAME}.zip"
-    eval $COMMAND;
+    # cut beefore % and 
+    OUTPUT=$(eval $COMMAND 2>&1); # | cut -d'%' -f 1 | rev | cut -b 1-5 | rev
+    OUTPUT=${OUTPUT%%%*};
+    OUTPUT=${OUTPUT: -5};
+    echo "Wynik bzip2 = ${OUTPUT}";
 done
 
 for FILE_NAME in $LIST_FILE
