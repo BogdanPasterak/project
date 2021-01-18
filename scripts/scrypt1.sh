@@ -35,35 +35,28 @@ LIST_FILE=$(eval "ls ${SOUR}");
 # make archiwe file in destination folder
 for FILE_NAME in $LIST_FILE
 do
-    # compress all files best compres
-
-    ## gzip
-    # COMMAND="gzip -cv9 ${SOUR}${FILE_NAME} > ${DEST}${FILE_NAME}.gz"
-    COMMAND="gzip -c9 ${SOUR}${FILE_NAME} > ${DEST}${FILE_NAME}.gz"
-    # echo -e "COMMAND = ${COMMAND}";
-    # redirect stdout to file (append)
-    # eval $COMMAND &>>out.txt 
-    # redirect stdout to variable
-    # and extract %
-    # OUTPUT=$(eval $COMMAND 2>&1); #  | cut -d' ' -f 2 | cut -b 1-4
-    # OUTPUT=${OUTPUT%%%*};
-    # OUTPUT=${OUTPUT: -4};
-    eval $COMMAND
-    # echo "Wynik gzip  = ${OUTPUT}";
-
-    ## bzip2
-    COMMAND="bzip2 -zfkc9 ${SOUR}${FILE_NAME} > ${DEST}${FILE_NAME}.bz2"
-    # cut beefore % and 
-    # OUTPUT=$(eval $COMMAND 2>&1); # | cut -d'%' -f 1 | rev | cut -b 1-5 | rev
-    # OUTPUT=${OUTPUT%%%*};
-    # OUTPUT=${OUTPUT: -5};
-    # echo "Wynik bzip2 = ${OUTPUT}";
-    eval $COMMAND
+    # compress all files with 5 different algorytm 
 
     ## zip
     COMMAND="zip -9q ${DEST}${FILE_NAME}.zip ${SOUR}${FILE_NAME}"
     eval $COMMAND
+
+    ## gzip
+    COMMAND="gzip -c9 --synchronous ${SOUR}${FILE_NAME} > ${DEST}${FILE_NAME}.gz"
+    eval $COMMAND
+
+    ## bzip2
+    COMMAND="bzip2 -zfkc9 ${SOUR}${FILE_NAME} > ${DEST}${FILE_NAME}.bz2"
+    eval $COMMAND
+
+    ## xz
+    COMMAND="xz -fkqc9 ${SOUR}${FILE_NAME} > ${DEST}${FILE_NAME}.xz"
+    eval $COMMAND
+
 done
+
+
+
 
     # COMMAND="zip -v9 ${DEST}sz6.txt.zip ${SOUR}sample6.txt"
     # echo $COMMAND
