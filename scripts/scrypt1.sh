@@ -27,6 +27,7 @@ DEST="./../destination/";
 
 # clear screen
 clear
+./delete.sh
 
 # list of file to commpress
 LIST_FILE=$(eval "ls ${SOUR}");
@@ -37,20 +38,21 @@ do
     # compress all files best compres
 
     ## gzip
-    COMMAND="gzip -cv9 ${SOUR}${FILE_NAME} > ${DEST}${FILE_NAME}.gz"
+    # COMMAND="gzip -cv9 ${SOUR}${FILE_NAME} > ${DEST}${FILE_NAME}.gz"
+    COMMAND="gzip -c9 ${SOUR}${FILE_NAME} > ${DEST}${FILE_NAME}.gz"
     # echo -e "COMMAND = ${COMMAND}";
-#    eval $COMMAND | cut -d' ' -f 2; # nie dziala
     # redirect stdout to file (append)
     # eval $COMMAND &>>out.txt 
     # redirect stdout to variable
     # and extract %
-    OUTPUT=$(eval $COMMAND 2>&1); #  | cut -d' ' -f 2 | cut -b 1-4
-    OUTPUT=${OUTPUT%%%*};
-    OUTPUT=${OUTPUT: -4};
-    echo "Wynik gzip  = ${OUTPUT}";
+    # OUTPUT=$(eval $COMMAND 2>&1); #  | cut -d' ' -f 2 | cut -b 1-4
+    # OUTPUT=${OUTPUT%%%*};
+    # OUTPUT=${OUTPUT: -4};
+    eval $COMMAND
+    # echo "Wynik gzip  = ${OUTPUT}";
 
     ## bzip2
-    COMMAND="bzip2 -zfkcv9 ${SOUR}${FILE_NAME} > ${DEST}${FILE_NAME}.zip"
+    COMMAND="bzip2 -zfkcv9 ${SOUR}${FILE_NAME} > ${DEST}${FILE_NAME}.bz2"
     # cut beefore % and 
     OUTPUT=$(eval $COMMAND 2>&1); # | cut -d'%' -f 1 | rev | cut -b 1-5 | rev
     OUTPUT=${OUTPUT%%%*};
@@ -58,17 +60,30 @@ do
     echo "Wynik bzip2 = ${OUTPUT}";
 done
 
-for FILE_NAME in $LIST_FILE
-do
+    COMMAND="zip -v9 ${DEST}sz6.txt.zip ${SOUR}sample6.txt"
+    # echo $COMMAND
+    # # cut beefore % and 
+    OUTPUT=$(eval $COMMAND 2>&1); # | cut -d'%' -f 1 | rev | cut -b 1-5 | rev
+    # OUTPUT=${OUTPUT%%%*};
+    # OUTPUT=${OUTPUT: -5};
+    echo "Wynik zip = ${OUTPUT}";
+
+
+
+
+
+
+# for FILE_NAME in $LIST_FILE
+# do
     # name file in color
 #    echo -e "\n${LIGHT_GREEN}${FILE_NAME}${NC}";
-    ORGIN=$(eval "ls -l ${SOUR}${FILE_NAME} | cut -d' ' -f 5");
-    COMPR=$(eval "ls -l ${DEST}${FILE_NAME}.gz | cut -d' ' -f 5");
-    SAVE=$((ORGIN - COMPR));
-    PROC=$((SAVE * 100 / ORGIN));
+    # ORGIN=$(eval "ls -l ${SOUR}${FILE_NAME} | cut -d' ' -f 5");
+    # COMPR=$(eval "ls -l ${DEST}${FILE_NAME}.gz | cut -d' ' -f 5");
+    # SAVE=$((ORGIN - COMPR));
+    # PROC=$((SAVE * 100 / ORGIN));
 #    echo "Size reduction -> ${ORGIN} - ${COMPR} = ${SAVE} -> ${PROC}%"
     ## print text from file
     # cat "$SOUR$FILE_NAME";
     # echo -e "\n";
 
-done
+# done

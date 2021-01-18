@@ -8,6 +8,8 @@ DEST="./../destination/";
 for FILE_NAME in $(ls ./../destination/)
 do
     # name file 
-    echo -e "Remove file -> ${FILE_NAME}${NC}";
+    # echo -e "Remove file -> ${FILE_NAME}${NC}";
     rm "${DEST}${FILE_NAME}"
 done
+
+echo "Remove all file from ${DEST}"
