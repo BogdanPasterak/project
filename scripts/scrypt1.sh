@@ -52,21 +52,26 @@ do
     # echo "Wynik gzip  = ${OUTPUT}";
 
     ## bzip2
-    COMMAND="bzip2 -zfkcv9 ${SOUR}${FILE_NAME} > ${DEST}${FILE_NAME}.bz2"
+    COMMAND="bzip2 -zfkc9 ${SOUR}${FILE_NAME} > ${DEST}${FILE_NAME}.bz2"
     # cut beefore % and 
-    OUTPUT=$(eval $COMMAND 2>&1); # | cut -d'%' -f 1 | rev | cut -b 1-5 | rev
-    OUTPUT=${OUTPUT%%%*};
-    OUTPUT=${OUTPUT: -5};
-    echo "Wynik bzip2 = ${OUTPUT}";
-done
-
-    COMMAND="zip -v9 ${DEST}sz6.txt.zip ${SOUR}sample6.txt"
-    # echo $COMMAND
-    # # cut beefore % and 
-    OUTPUT=$(eval $COMMAND 2>&1); # | cut -d'%' -f 1 | rev | cut -b 1-5 | rev
+    # OUTPUT=$(eval $COMMAND 2>&1); # | cut -d'%' -f 1 | rev | cut -b 1-5 | rev
     # OUTPUT=${OUTPUT%%%*};
     # OUTPUT=${OUTPUT: -5};
-    echo "Wynik zip = ${OUTPUT}";
+    # echo "Wynik bzip2 = ${OUTPUT}";
+    eval $COMMAND
+
+    ## zip
+    COMMAND="zip -9q ${DEST}${FILE_NAME}.zip ${SOUR}${FILE_NAME}"
+    eval $COMMAND
+done
+
+    # COMMAND="zip -v9 ${DEST}sz6.txt.zip ${SOUR}sample6.txt"
+    # echo $COMMAND
+    # # cut beefore % and 
+    # OUTPUT=$(eval $COMMAND 2>&1); # | cut -d'%' -f 1 | rev | cut -b 1-5 | rev
+    # OUTPUT=${OUTPUT%%%*};
+    # OUTPUT=${OUTPUT: -5};
+    # echo "Wynik zip = ${OUTPUT}";
 
 
 
