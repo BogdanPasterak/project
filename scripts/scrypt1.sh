@@ -71,12 +71,13 @@ done
 
 
 
-# for FILE_NAME in $LIST_FILE
-# do
+for FILE_NAME in $LIST_FILE
+do
     # name file in color
-#    echo -e "\n${LIGHT_GREEN}${FILE_NAME}${NC}";
-    # ORGIN=$(eval "ls -l ${SOUR}${FILE_NAME} | cut -d' ' -f 5");
-    # COMPR=$(eval "ls -l ${DEST}${FILE_NAME}.gz | cut -d' ' -f 5");
+    echo -e "${LIGHT_GREEN}${FILE_NAME}${NC}";
+    ORGIN=$(eval "ls -l ${SOUR}${FILE_NAME} | cut -d' ' -f 5");
+    COMPR=$(eval "ls -l ${DEST}${FILE_NAME}.gz | cut -d' ' -f 5");
+    echo "$ORGIN $COMPR"
     # SAVE=$((ORGIN - COMPR));
     # PROC=$((SAVE * 100 / ORGIN));
 #    echo "Size reduction -> ${ORGIN} - ${COMPR} = ${SAVE} -> ${PROC}%"
@@ -84,4 +85,4 @@ done
     # cat "$SOUR$FILE_NAME";
     # echo -e "\n";
 
-# done
+done
